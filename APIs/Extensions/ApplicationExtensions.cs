@@ -1,0 +1,43 @@
+﻿using APIs.Data;
+using APIs.Interfaces;
+using APIs.Services;
+using Microsoft.EntityFrameworkCore;
+using System.Threading.RateLimiting;
+
+namespace APIs.Extensions
+{
+    public static class ApplicationExtensions
+    {
+        public static IServiceCollection AddApplicationExtensions(this IServiceCollection services, IConfiguration configuration)
+        {
+            var localConnection = configuration.GetConnectionString("LocalConnection");
+            services.AddDbContext<AppDbContext>(options =>
+            {
+                options.UseSqlServer(localConnection);
+            });
+
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped(typeof(IUnitOfWork), typeof(UnitOfWork));
+            services.AddScoped<IIncidentGenerator, IncidentGenerator>();
+            services.AddRateLimiter(options =>
+            {
+                options.AddPolicy("bandwidthPerIp", context =>
+                {
+                    var ipAddress = context.Connection.RemoteIpAddress?.ToString() ?? "unknown";
+
+                    return RateLimitPartition.GetTokenBucketLimiter(ipAddress, key => new TokenBucketRateLimiterOptions
+                    {
+                        TokenLimit = 100 * 1024,
+                        QueueProcessingOrder = QueueProcessingOrder.OldestFirst,
+                        QueueLimit = 0,
+                        ReplenishmentPeriod = TimeSpan.FromSeconds(1),
+                        TokensPerPeriod = 100 * 1024,
+                        AutoReplenishment = true
+                    });
+                });
+            });
+
+            return services;
+        }
+    }
+}

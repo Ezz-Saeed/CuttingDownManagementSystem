@@ -1,5 +1,6 @@
 
 using APIs.Data;
+using APIs.Extensions;
 using APIs.Interfaces;
 using APIs.MiddleWares;
 using APIs.Services;
@@ -21,32 +22,7 @@ namespace APIs
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
-            var localConnection = builder.Configuration.GetConnectionString("LocalConnection");
-            builder.Services.AddDbContext<AppDbContext>(options =>
-            {
-                options.UseSqlServer(localConnection);
-            });
-
-            builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
-            builder.Services.AddScoped(typeof(IUnitOfWork),typeof(UnitOfWork));
-            builder.Services.AddScoped<IIncidentGenerator, IncidentGenerator>();
-            builder.Services.AddRateLimiter(options =>
-            {
-                options.AddPolicy("bandwidthPerIp", context =>
-                {
-                    var ipAddress = context.Connection.RemoteIpAddress?.ToString() ?? "unknown";
-
-                    return RateLimitPartition.GetTokenBucketLimiter(ipAddress, key => new TokenBucketRateLimiterOptions
-                    {
-                        TokenLimit = 100 * 1024, // 100 KB
-                        QueueProcessingOrder = QueueProcessingOrder.OldestFirst,
-                        QueueLimit = 0,
-                        ReplenishmentPeriod = TimeSpan.FromSeconds(1),
-                        TokensPerPeriod = 100 * 1024, // refill 100 KB every second
-                        AutoReplenishment = true
-                    });
-                });
-            });
+            builder.Services.AddApplicationExtensions(builder.Configuration);
 
             var app = builder.Build();
 
