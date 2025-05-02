@@ -7,7 +7,7 @@
     {
         static async Task Main(string[] args)
         {
-            var simulator = new IncidentGeneratorSimulator(4,10);
+            var simulator = new IncidentGeneratorSimulator();
             await simulator.CallGenerateAPIsAsync();
 
             //const string baseUrl = "http://localhost:5288/api/Incidents";

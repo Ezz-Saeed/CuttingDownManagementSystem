@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace IncidentSimulatorConsoleApp.Services
 {
-    public class IncidentGeneratorSimulator(int parallelRequests = 5, int delayBetweenRoundsInSeconds = 10)
+    public class IncidentGeneratorSimulator(int parallelRequests = 4, int delayBetweenRoundsInSeconds = 10)
     {
         private const string baseUrl = "http://localhost:5288/api/Incidents";
         private HttpClient httpClient = new();

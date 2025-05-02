@@ -1,6 +1,7 @@
 
 using APIs.Data;
 using APIs.Interfaces;
+using APIs.MiddleWares;
 using APIs.Services;
 using Microsoft.EntityFrameworkCore;
 
@@ -37,6 +38,8 @@ namespace APIs
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
+
+            app.UseMiddleware<RateLimitingMiddleware>();
 
             app.UseHttpsRedirection();
 
