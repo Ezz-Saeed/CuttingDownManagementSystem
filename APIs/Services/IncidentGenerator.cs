@@ -1,20 +1,21 @@
-﻿using APIs.Models.STA.IncidentsAndProblems;
+﻿using APIs.Interfaces;
+using APIs.Models.STA.IncidentsAndProblems;
 
-namespace APIs.Helpers
+namespace APIs.Services
 {
-    public static class IncidentGenerator
+    public class IncidentGenerator : IIncidentGenerator
     {
-        private static readonly Random _rand = new();
+        private readonly Random _rand = new();
 
-        public static List<CuttingDownA> GenerateIncidentA(int count, int closedPercentage)
+        public List<CuttingDownA> GenerateIncidentA(int count, int closedPercentage)
         {
             List<CuttingDownA> incidents = new List<CuttingDownA>();
-            var isClosed = _rand.Next(100) < closedPercentage;
-            var createDate = DateTime.UtcNow.AddMinutes(-_rand.Next(10, 500));
-            var endDate = isClosed ? createDate.AddMinutes(_rand.Next(10, 300)) : (DateTime?)null;
+            for (int i = 0; i < count;i++)
+            {             
+                var isClosed = _rand.Next(100) < closedPercentage;
+                var createDate = DateTime.UtcNow.AddMinutes(-_rand.Next(10, 500));
+                var endDate = isClosed ? createDate.AddMinutes(_rand.Next(10, 300)) : (DateTime?)null;
 
-            for(int i = 0; i < count;)
-            {
                 incidents.Add
                     (
                         new CuttingDownA
@@ -37,15 +38,15 @@ namespace APIs.Helpers
             return incidents;
         }
 
-        public static List<CuttingDownB>GenerateIncidentB(int count, int closedPercentage)
+        public List<CuttingDownB> GenerateIncidentB(int count, int closedPercentage)
         {
-            List<CuttingDownB> incidents = new List<CuttingDownB>();
-            var isClosed = _rand.Next(100) < closedPercentage;
-            var createDate = DateTime.UtcNow.AddMinutes(-_rand.Next(10, 500));
-            var endDate = isClosed ? createDate.AddMinutes(_rand.Next(10, 300)) : (DateTime?)null;
+            List<CuttingDownB> incidents = new List<CuttingDownB>();         
 
-            for (int i = 0; i < count;)
+            for (int i = 0; i < count;i++)
             {
+                var isClosed = _rand.Next(100) < closedPercentage;
+                var createDate = DateTime.UtcNow.AddMinutes(-_rand.Next(10, 500));
+                var endDate = isClosed ? createDate.AddMinutes(_rand.Next(10, 300)) : (DateTime?)null;
                 incidents.Add
                     (
                         new CuttingDownB

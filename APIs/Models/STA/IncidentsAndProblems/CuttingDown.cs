@@ -22,7 +22,7 @@ namespace APIs.Models.STA.IncidentsAndProblems
 
         public bool IsActive { get; set; }
         public string CreatedUser { get; set; }
-        public string UpdatedUser { get; set; }
+        public string? UpdatedUser { get; set; }
 
         public virtual ProblemType ProblemType { get; set; }
     }

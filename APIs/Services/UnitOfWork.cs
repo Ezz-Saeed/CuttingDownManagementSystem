@@ -16,5 +16,10 @@ namespace APIs.Services
         public IRepository<CuttingDownA> CuttingDownAIncidents {  get; private set; }
 
         public IRepository<CuttingDownB> CuttingDownBIncidents { get; private set; }
+
+        public async Task<int> SaveChangesAsync()
+        {
+            return await context.SaveChangesAsync();
+        }
     }
 }

@@ -27,6 +27,7 @@ namespace APIs
 
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
             builder.Services.AddScoped(typeof(IUnitOfWork),typeof(UnitOfWork));
+            builder.Services.AddScoped<IIncidentGenerator, IncidentGenerator>();
 
             var app = builder.Build();
 

@@ -6,5 +6,6 @@ namespace APIs.Interfaces
     {
         IRepository<CuttingDownA> CuttingDownAIncidents { get; }
         IRepository<CuttingDownB> CuttingDownBIncidents { get; }
+        Task<int> SaveChangesAsync();
     }
 }
