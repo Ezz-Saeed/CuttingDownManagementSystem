@@ -4,6 +4,7 @@ using APIs.Interfaces;
 using APIs.MiddleWares;
 using APIs.Services;
 using Microsoft.EntityFrameworkCore;
+using System.Threading.RateLimiting;
 
 namespace APIs
 {
@@ -29,6 +30,23 @@ namespace APIs
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
             builder.Services.AddScoped(typeof(IUnitOfWork),typeof(UnitOfWork));
             builder.Services.AddScoped<IIncidentGenerator, IncidentGenerator>();
+            builder.Services.AddRateLimiter(options =>
+            {
+                options.AddPolicy("bandwidthPerIp", context =>
+                {
+                    var ipAddress = context.Connection.RemoteIpAddress?.ToString() ?? "unknown";
+
+                    return RateLimitPartition.GetTokenBucketLimiter(ipAddress, key => new TokenBucketRateLimiterOptions
+                    {
+                        TokenLimit = 100 * 1024, // 100 KB
+                        QueueProcessingOrder = QueueProcessingOrder.OldestFirst,
+                        QueueLimit = 0,
+                        ReplenishmentPeriod = TimeSpan.FromSeconds(1),
+                        TokensPerPeriod = 100 * 1024, // refill 100 KB every second
+                        AutoReplenishment = true
+                    });
+                });
+            });
 
             var app = builder.Build();
 
@@ -46,7 +64,7 @@ namespace APIs
             app.UseAuthorization();
 
 
-            app.MapControllers();
+            app.MapControllers().RequireRateLimiting("bandwidthPerIp");
 
             app.Run();
         }
