@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.12.35728.132 d17.12
+VisualStudioVersion = 17.12.35728.132
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APIs", "APIs.csproj", "{A2EF20B8-4A00-415E-9894-D9C47D8FC615}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IncidentSimulatorConsoleApp", "..\IncidentSimulatorConsoleApp\IncidentSimulatorConsoleApp.csproj", "{0AF1EFE0-2727-49D0-A426-7788CAC824D3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{A2EF20B8-4A00-415E-9894-D9C47D8FC615}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A2EF20B8-4A00-415E-9894-D9C47D8FC615}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A2EF20B8-4A00-415E-9894-D9C47D8FC615}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0AF1EFE0-2727-49D0-A426-7788CAC824D3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0AF1EFE0-2727-49D0-A426-7788CAC824D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0AF1EFE0-2727-49D0-A426-7788CAC824D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0AF1EFE0-2727-49D0-A426-7788CAC824D3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
