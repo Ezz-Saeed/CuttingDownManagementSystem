@@ -37,6 +37,8 @@ namespace APIs
 
             app.UseHttpsRedirection();
 
+            app.UseResponseCompression();
+
             app.UseAuthorization();
 
 

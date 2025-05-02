@@ -1,7 +1,9 @@
 ﻿using APIs.Data;
 using APIs.Interfaces;
 using APIs.Services;
+using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.EntityFrameworkCore;
+using System.IO.Compression;
 using System.Threading.RateLimiting;
 
 namespace APIs.Extensions
@@ -19,6 +21,8 @@ namespace APIs.Extensions
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped(typeof(IUnitOfWork), typeof(UnitOfWork));
             services.AddScoped<IIncidentGenerator, IncidentGenerator>();
+
+
             services.AddRateLimiter(options =>
             {
                 options.AddPolicy("bandwidthPerIp", context =>
@@ -35,6 +39,33 @@ namespace APIs.Extensions
                         AutoReplenishment = true
                     });
                 });
+            });
+
+
+            services.AddResponseCompression(options =>
+            {
+                options.EnableForHttps = true;
+                options.Providers.Add<BrotliCompressionProvider>();
+                options.Providers.Add<GzipCompressionProvider>();
+
+                options.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(new[]
+                {
+                    "application/json",
+                    "text/plain",
+                    "text/json",
+                    "text/html"
+                    });
+              });
+
+            
+            services.Configure<BrotliCompressionProviderOptions>(options =>
+            {
+                options.Level = CompressionLevel.Optimal;
+            });
+
+            services.Configure<GzipCompressionProviderOptions>(options =>
+            {
+                options.Level = CompressionLevel.Optimal;
             });
 
             return services;
