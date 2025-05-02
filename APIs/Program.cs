@@ -1,5 +1,7 @@
 
 using APIs.Data;
+using APIs.Interfaces;
+using APIs.Services;
 using Microsoft.EntityFrameworkCore;
 
 namespace APIs
@@ -22,6 +24,9 @@ namespace APIs
             {
                 options.UseSqlServer(localConnection);
             });
+
+            builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+            builder.Services.AddScoped(typeof(IUnitOfWork),typeof(UnitOfWork));
 
             var app = builder.Build();
 
