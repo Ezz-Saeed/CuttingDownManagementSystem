@@ -17,6 +17,13 @@ namespace APIs.Services
             return await context.Set<T>().FirstOrDefaultAsync(expression);
         }
 
+        public async Task<ICollection<T>> GetAllAsync(Expression<Func<T, bool>>? expression)
+        {
+            if(expression is null)
+                return await context.Set<T>().ToListAsync();
+            return await context.Set<T>().Where(expression).ToListAsync();
+        }
+
         //public T Create(T entity)
         //{
         //    context.Set<T>().Add(entity);

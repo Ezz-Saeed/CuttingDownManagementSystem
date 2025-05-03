@@ -1,5 +1,6 @@
 ﻿using APIs.Data;
 using APIs.Interfaces;
+using APIs.Models.FTA.IncidentData;
 using APIs.Models.STA.IncidentsAndProblems;
 using APIs.Models.STA.Structure;
 
@@ -15,6 +16,7 @@ namespace APIs.Services
             CuttingDownBIncidents = new Repository<CuttingDownB>(context);
             Cabins = new Repository<Cabin>(context);
             Cables = new Repository<Cable>(context);
+            IgnoredIncidents = new Repository<CuttingDownIgnored>(context);
         }
         public IRepository<CuttingDownA> CuttingDownAIncidents {  get; private set; }
 
@@ -23,6 +25,8 @@ namespace APIs.Services
         public IRepository<Cabin> Cabins { get; private set; }
 
         public IRepository<Cable> Cables { get; private set; }
+
+        public IRepository<CuttingDownIgnored> IgnoredIncidents { get; private set; }
 
         public async Task<int> SaveChangesAsync()
         {

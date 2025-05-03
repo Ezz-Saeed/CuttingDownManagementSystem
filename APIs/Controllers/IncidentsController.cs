@@ -26,5 +26,12 @@ namespace APIs.Controllers
             await unitOfWork.SaveChangesAsync();
             return Ok(new { Message = $"{incidents.Result.Count} CuttingDownB incidents generated and saved." });
         }
+
+        [HttpGet("ignoredIncidents")]
+        public async Task<IActionResult> GetIgnoredIncidents()
+        {
+            var incidents = await unitOfWork.IgnoredIncidents.GetAllAsync(null);
+            return Ok(incidents);
+        }
     }
 }
