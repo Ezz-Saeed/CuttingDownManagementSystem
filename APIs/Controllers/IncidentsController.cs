@@ -12,9 +12,9 @@ namespace APIs.Controllers
         public async Task<IActionResult> GenerateAndSaveIncidentsA([FromQuery] int count = 10, [FromQuery] int closedPercentage = 30)
         {
             var incidents = incidentGenerator.GenerateIncidentA(count, closedPercentage);
-            await unitOfWork.CuttingDownAIncidents.AddRangeAsync(incidents);
+            await unitOfWork.CuttingDownAIncidents.AddRangeAsync(incidents.Result);
             await unitOfWork.SaveChangesAsync();
-            return Ok(new { Message = $"{incidents.Count} CuttingDownA incidents generated and saved." });
+            return Ok(new { Message = $"{incidents.Result.Count} CuttingDownA incidents generated and saved." });
         }
 
         
@@ -22,9 +22,9 @@ namespace APIs.Controllers
         public async Task<IActionResult> GenerateAndSaveIncidentsB([FromQuery] int count = 10, [FromQuery] int closedPercentage = 30)
         {
             var incidents = incidentGenerator.GenerateIncidentB(count, closedPercentage);
-            await unitOfWork.CuttingDownBIncidents.AddRangeAsync(incidents);
+            await unitOfWork.CuttingDownBIncidents.AddRangeAsync(incidents.Result);
             await unitOfWork.SaveChangesAsync();
-            return Ok(new { Message = $"{incidents.Count} CuttingDownB incidents generated and saved." });
+            return Ok(new { Message = $"{incidents.Result.Count} CuttingDownB incidents generated and saved." });
         }
     }
 }

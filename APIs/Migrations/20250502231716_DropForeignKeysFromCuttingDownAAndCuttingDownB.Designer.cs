@@ -4,6 +4,7 @@ using APIs.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace APIs.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250502231716_DropForeignKeysFromCuttingDownAAndCuttingDownB")]
+    partial class DropForeignKeysFromCuttingDownAAndCuttingDownB
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -434,32 +437,31 @@ namespace APIs.Migrations
 
             modelBuilder.Entity("APIs.Models.FTA.IncidentData.CuttingDownIgnored", b =>
                 {
-                    b.Property<int>("CuttingDownIgnoredKey")
+                    b.Property<int>("CuttingDownIncidentId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CuttingDownIgnoredKey"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CuttingDownIncidentId"));
 
                     b.Property<DateTime>("ActualCreateDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("CabelName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CabinName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CreatedUser")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("CuttingDownIncidentId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime?>("SynchCreateDate")
                         .HasColumnType("datetime2");
 
-                    b.HasKey("CuttingDownIgnoredKey");
+                    b.HasKey("CuttingDownIncidentId");
 
                     b.ToTable("CuttingDownIgnored");
                 });
@@ -519,17 +521,14 @@ namespace APIs.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CuttingDownIncidentId"));
 
+                    b.Property<int>("CabinKey")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("CreatedUser")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("CuttingDownCabinKey")
-                        .HasColumnType("int");
-
-                    b.Property<string>("CuttingDownCabinName")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("EndDate")
@@ -542,9 +541,6 @@ namespace APIs.Migrations
                         .HasColumnType("bit");
 
                     b.Property<bool>("IsPlanned")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsProcessed")
                         .HasColumnType("bit");
 
                     b.Property<DateTime?>("PlannedEndDTS")
@@ -560,8 +556,6 @@ namespace APIs.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("CuttingDownIncidentId");
-
-                    b.HasIndex("CuttingDownCabinKey");
 
                     b.HasIndex("ProblemTypeKey");
 
@@ -576,17 +570,14 @@ namespace APIs.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CuttingDownIncidentId"));
 
+                    b.Property<int>("CableKey")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("CreatedUser")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("CuttingDownCableKey")
-                        .HasColumnType("int");
-
-                    b.Property<string>("CuttingDownCableName")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("EndDate")
@@ -599,9 +590,6 @@ namespace APIs.Migrations
                         .HasColumnType("bit");
 
                     b.Property<bool>("IsPlanned")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsProcessed")
                         .HasColumnType("bit");
 
                     b.Property<DateTime?>("PlannedEndDTS")
@@ -617,8 +605,6 @@ namespace APIs.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("CuttingDownIncidentId");
-
-                    b.HasIndex("CuttingDownCableKey");
 
                     b.HasIndex("ProblemTypeKey");
 
@@ -1357,34 +1343,22 @@ namespace APIs.Migrations
 
             modelBuilder.Entity("APIs.Models.STA.IncidentsAndProblems.CuttingDownA", b =>
                 {
-                    b.HasOne("APIs.Models.STA.Structure.Cabin", "Cabin")
-                        .WithMany()
-                        .HasForeignKey("CuttingDownCabinKey");
-
                     b.HasOne("APIs.Models.STA.IncidentsAndProblems.ProblemType", "ProblemType")
                         .WithMany("CuttingDownAIncidents")
                         .HasForeignKey("ProblemTypeKey")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Cabin");
-
                     b.Navigation("ProblemType");
                 });
 
             modelBuilder.Entity("APIs.Models.STA.IncidentsAndProblems.CuttingDownB", b =>
                 {
-                    b.HasOne("APIs.Models.STA.Structure.Cable", "Cable")
-                        .WithMany()
-                        .HasForeignKey("CuttingDownCableKey");
-
                     b.HasOne("APIs.Models.STA.IncidentsAndProblems.ProblemType", "ProblemType")
                         .WithMany("CuttingDownBIncidents")
                         .HasForeignKey("ProblemTypeKey")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Cable");
 
                     b.Navigation("ProblemType");
                 });

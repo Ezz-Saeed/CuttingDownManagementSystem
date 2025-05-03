@@ -4,7 +4,7 @@ namespace APIs.Interfaces
 {
     public interface IIncidentGenerator
     {
-        List<CuttingDownA> GenerateIncidentA(int count, int closedPercentage);
-        List<CuttingDownB> GenerateIncidentB(int count, int closedPercentage);
+        Task<List<CuttingDownA>> GenerateIncidentA(int count, int closedPercentage);
+        Task<List<CuttingDownB>> GenerateIncidentB(int count, int closedPercentage);
     }
 }

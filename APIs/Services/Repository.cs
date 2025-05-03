@@ -12,6 +12,11 @@ namespace APIs.Services
             await context.Set<T>().AddRangeAsync(values);
         }
 
+        public async Task<T> GetEntityAsync(Expression<Func<T, bool>> expression)
+        {
+            return await context.Set<T>().FirstOrDefaultAsync(expression);
+        }
+
         //public T Create(T entity)
         //{
         //    context.Set<T>().Add(entity);

@@ -33,7 +33,7 @@ namespace APIs.Models.FTA.IncidentData
         public bool IsActive { get; set; }
 
         public string CreateSystemUserID { get; set; }
-        public string UpdateSystemUserID { get; set; }
+        public string? UpdateSystemUserID { get; set; }
 
         public ICollection<CuttingDownDetail> Details { get; set; }
     }

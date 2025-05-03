@@ -1,4 +1,5 @@
 ﻿using APIs.Models.STA.IncidentsAndProblems;
+using APIs.Models.STA.Structure;
 
 namespace APIs.Interfaces
 {
@@ -6,6 +7,8 @@ namespace APIs.Interfaces
     {
         IRepository<CuttingDownA> CuttingDownAIncidents { get; }
         IRepository<CuttingDownB> CuttingDownBIncidents { get; }
+        IRepository<Cabin> Cabins { get; }
+        IRepository<Cable> Cables { get; }
         Task<int> SaveChangesAsync();
     }
 }

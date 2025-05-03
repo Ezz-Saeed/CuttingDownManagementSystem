@@ -5,6 +5,7 @@ using APIs.Interfaces;
 using APIs.MiddleWares;
 using APIs.Services;
 using Microsoft.EntityFrameworkCore;
+using System.Text.Json;
 using System.Threading.RateLimiting;
 
 namespace APIs
@@ -17,7 +18,11 @@ namespace APIs
 
             // Add services to the container.
 
-            builder.Services.AddControllers();
+            builder.Services.AddControllers().AddJsonOptions(options =>
+            {
+                options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+                options.JsonSerializerOptions.WriteIndented = false;
+            });
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();

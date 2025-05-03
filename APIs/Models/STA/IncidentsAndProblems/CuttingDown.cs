@@ -16,6 +16,7 @@ namespace APIs.Models.STA.IncidentsAndProblems
 
         public bool IsPlanned { get; set; }
         public bool IsGlobal { get; set; }
+        public bool IsProcessed { get; set; }
 
         public DateTime? PlannedStartDTS { get; set; }
         public DateTime? PlannedEndDTS { get; set; }
