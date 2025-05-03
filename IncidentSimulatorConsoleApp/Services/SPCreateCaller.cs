@@ -18,6 +18,7 @@ namespace IncidentSimulatorConsoleApp.Services
             while (!cancellationToken.IsCancellationRequested)
             {
                 Exec_SP_Create();
+                Exec_SP_Close();
                 await Task.Delay(5000, cancellationToken);
             }
         }
@@ -34,7 +35,27 @@ namespace IncidentSimulatorConsoleApp.Services
             {
                 connection.Open();
                 command.ExecuteNonQuery();
-                Console.WriteLine("Stored procedure executed successfully.");
+                Console.WriteLine("Create Stored procedure executed successfully.");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error: " + ex.Message);
+            }
+        }
+
+        public void Exec_SP_Close()
+        {
+            using SqlConnection connection = new SqlConnection(localConnection);
+            using SqlCommand command = new SqlCommand("SP_Close", connection)
+            {
+                CommandType = CommandType.StoredProcedure
+            };
+
+            try
+            {
+                connection.Open();
+                command.ExecuteNonQuery();
+                Console.WriteLine("Close Stored procedure executed successfully.");
             }
             catch (Exception ex)
             {

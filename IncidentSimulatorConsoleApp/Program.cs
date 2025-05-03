@@ -14,6 +14,7 @@
             var cts = new CancellationTokenSource();
             var simulatorTask = Task.Run(() => simulator.CallGenerateAPIsAsync());
             var spCreateTask = Task.Run(() => spCaller.RunAsync(cts.Token));
+            //var spCloseTask = Task.Run(() => spCaller)
 
             await Task.WhenAll(simulatorTask, spCreateTask);
 
