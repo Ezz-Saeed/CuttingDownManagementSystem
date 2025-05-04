@@ -1,4 +1,7 @@
-﻿using APIs.Interfaces;
+﻿using APIs.DTOs;
+using APIs.Interfaces;
+using APIs.Specifications;
+using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -6,7 +9,8 @@ namespace APIs.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class IncidentsController(IUnitOfWork unitOfWork, IIncidentGenerator incidentGenerator) : ControllerBase
+    public class IncidentsController(IUnitOfWork unitOfWork, IIncidentGenerator incidentGenerator,
+        IMapper mapper) : ControllerBase
     {
         [HttpPost("generateIncidentsA")]
         public async Task<IActionResult> GenerateAndSaveIncidentsA([FromQuery] int count = 10, [FromQuery] int closedPercentage = 30)
@@ -43,6 +47,15 @@ namespace APIs.Controllers
             unitOfWork.IgnoredIncidents.Delete(incident);
             await unitOfWork.SaveChangesAsync();
             return Ok(new { Message = "Ignored incident deleted." });
+        }
+
+        [HttpGet("search")]
+        public async Task<IActionResult> Search([FromQuery] SpecificationParams searchParams)
+        {
+            var spec = new IncidentSpecifications(searchParams);
+            var headers = await unitOfWork.Headers.GetAllAsync(spec);
+            var headersDto = mapper.Map<List<GetHeaderDto>>(headers);
+            return Ok(headersDto);
         }
     }
 }

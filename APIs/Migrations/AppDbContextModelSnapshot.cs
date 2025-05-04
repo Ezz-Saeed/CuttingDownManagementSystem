@@ -36,7 +36,7 @@ namespace APIs.Migrations
 
                     b.HasKey("ChannelKey");
 
-                    b.ToTable("Channels");
+                    b.ToTable("Channels", (string)null);
 
                     b.HasData(
                         new
@@ -80,7 +80,7 @@ namespace APIs.Migrations
 
                     b.HasIndex("ParentNetworkElementKey");
 
-                    b.ToTable("NetworkElement");
+                    b.ToTable("NetworkElement", (string)null);
 
                     b.HasData(
                         new
@@ -206,7 +206,7 @@ namespace APIs.Migrations
 
                     b.HasKey("NetworkElementHierarchyPathKey");
 
-                    b.ToTable("NetworkElementHierarchyPath");
+                    b.ToTable("NetworkElementHierarchyPath", (string)null);
 
                     b.HasData(
                         new
@@ -247,7 +247,7 @@ namespace APIs.Migrations
 
                     b.HasIndex("ParentNetworkElementTypeKey");
 
-                    b.ToTable("NetworkElementTypes");
+                    b.ToTable("NetworkElementTypes", (string)null);
 
                     b.HasData(
                         new
@@ -369,7 +369,7 @@ namespace APIs.Migrations
 
                     b.HasIndex("CuttingDownKey");
 
-                    b.ToTable("CuttingDownDetail");
+                    b.ToTable("CuttingDownDetail", (string)null);
                 });
 
             modelBuilder.Entity("APIs.Models.FTA.IncidentData.CuttingDownHeader", b =>
@@ -429,7 +429,7 @@ namespace APIs.Migrations
 
                     b.HasIndex("CuttingDownProblemTypeKey");
 
-                    b.ToTable("CuttingDownHeaders");
+                    b.ToTable("CuttingDownHeaders", (string)null);
                 });
 
             modelBuilder.Entity("APIs.Models.FTA.IncidentData.CuttingDownIgnored", b =>
@@ -461,7 +461,7 @@ namespace APIs.Migrations
 
                     b.HasKey("CuttingDownIgnoredKey");
 
-                    b.ToTable("CuttingDownIgnored");
+                    b.ToTable("CuttingDownIgnored", (string)null);
                 });
 
             modelBuilder.Entity("APIs.Models.FTA.User", b =>
@@ -482,7 +482,7 @@ namespace APIs.Migrations
 
                     b.HasKey("UserKey");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
 
                     b.HasData(
                         new
@@ -565,7 +565,7 @@ namespace APIs.Migrations
 
                     b.HasIndex("ProblemTypeKey");
 
-                    b.ToTable("CuttingDownA");
+                    b.ToTable("CuttingDownA", (string)null);
                 });
 
             modelBuilder.Entity("APIs.Models.STA.IncidentsAndProblems.CuttingDownB", b =>
@@ -622,7 +622,7 @@ namespace APIs.Migrations
 
                     b.HasIndex("ProblemTypeKey");
 
-                    b.ToTable("CuttingDownB");
+                    b.ToTable("CuttingDownB", (string)null);
                 });
 
             modelBuilder.Entity("APIs.Models.STA.IncidentsAndProblems.ProblemType", b =>
@@ -639,7 +639,7 @@ namespace APIs.Migrations
 
                     b.HasKey("ProblemTypeKey");
 
-                    b.ToTable("ProblemTypes");
+                    b.ToTable("ProblemTypes", (string)null);
 
                     b.HasData(
                         new
@@ -728,7 +728,7 @@ namespace APIs.Migrations
 
                     b.HasIndex("CableKey");
 
-                    b.ToTable("Block");
+                    b.ToTable("Block", (string)null);
 
                     b.HasData(
                         new
@@ -776,7 +776,7 @@ namespace APIs.Migrations
 
                     b.HasIndex("BlockKey");
 
-                    b.ToTable("Building");
+                    b.ToTable("Building", (string)null);
 
                     b.HasData(
                         new
@@ -824,7 +824,7 @@ namespace APIs.Migrations
 
                     b.HasIndex("TowerKey");
 
-                    b.ToTable("Cabin");
+                    b.ToTable("Cabin", (string)null);
 
                     b.HasData(
                         new
@@ -872,7 +872,7 @@ namespace APIs.Migrations
 
                     b.HasIndex("CabinKey");
 
-                    b.ToTable("Cable");
+                    b.ToTable("Cable", (string)null);
 
                     b.HasData(
                         new
@@ -920,7 +920,7 @@ namespace APIs.Migrations
 
                     b.HasIndex("ZoneKey");
 
-                    b.ToTable("City");
+                    b.ToTable("City", (string)null);
 
                     b.HasData(
                         new
@@ -964,7 +964,7 @@ namespace APIs.Migrations
 
                     b.HasIndex("BuildingKey");
 
-                    b.ToTable("Flat");
+                    b.ToTable("Flat", (string)null);
 
                     b.HasData(
                         new
@@ -1003,7 +1003,7 @@ namespace APIs.Migrations
 
                     b.HasKey("GovernrateKey");
 
-                    b.ToTable("Governorates");
+                    b.ToTable("Governorates", (string)null);
 
                     b.HasData(
                         new
@@ -1047,7 +1047,7 @@ namespace APIs.Migrations
 
                     b.HasIndex("GovernrateKey");
 
-                    b.ToTable("Sector");
+                    b.ToTable("Sector", (string)null);
 
                     b.HasData(
                         new
@@ -1095,7 +1095,7 @@ namespace APIs.Migrations
 
                     b.HasIndex("CityKey");
 
-                    b.ToTable("Station");
+                    b.ToTable("Station", (string)null);
 
                     b.HasData(
                         new
@@ -1150,7 +1150,7 @@ namespace APIs.Migrations
 
                     b.HasIndex("FlatKey");
 
-                    b.ToTable("Subscription");
+                    b.ToTable("Subscription", (string)null);
 
                     b.HasData(
                         new
@@ -1206,7 +1206,7 @@ namespace APIs.Migrations
 
                     b.HasIndex("StationKey");
 
-                    b.ToTable("Tower");
+                    b.ToTable("Tower", (string)null);
 
                     b.HasData(
                         new
@@ -1254,7 +1254,7 @@ namespace APIs.Migrations
 
                     b.HasIndex("SectorKey");
 
-                    b.ToTable("Zone");
+                    b.ToTable("Zone", (string)null);
 
                     b.HasData(
                         new

@@ -1,23 +1,15 @@
-﻿using APIs.Models.FTA.Hierarchy;
+﻿using APIs.Models.FTA.IncidentData;
 using APIs.Models.STA.IncidentsAndProblems;
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace APIs.Models.FTA.IncidentData
+namespace APIs.DTOs
 {
-    public class CuttingDownHeader
+    public class GetHeaderDto
     {
-        [Key]
         public int CuttingDownKey { get; set; }
         public int CuttingDownIncidentId { get; set; }
-
-        [ForeignKey(nameof(Channel))]
         public int ChannelKey { get; set; }
-        public virtual Channel Channel { get; set; }
-
-        [ForeignKey(nameof(CuttingDownProblemType))]
         public int CuttingDownProblemTypeKey { get; set; }
-        public virtual ProblemType CuttingDownProblemType { get; set; } 
 
         public DateTime ActualCreateDate { get; set; }
         public DateTime? SynchCreateDate { get; set; }
@@ -35,6 +27,5 @@ namespace APIs.Models.FTA.IncidentData
         public string CreateSystemUserID { get; set; }
         public string? UpdateSystemUserID { get; set; }
 
-        public virtual ICollection<CuttingDownDetail> Details { get; set; }
     }
 }

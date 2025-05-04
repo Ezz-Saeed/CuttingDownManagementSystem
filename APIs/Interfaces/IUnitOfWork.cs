@@ -11,6 +11,7 @@ namespace APIs.Interfaces
         IRepository<Cabin> Cabins { get; }
         IRepository<Cable> Cables { get; }
         IRepository<CuttingDownIgnored> IgnoredIncidents { get; }
+        IRepository<CuttingDownHeader> Headers { get; }
         Task<int> SaveChangesAsync();
     }
 }

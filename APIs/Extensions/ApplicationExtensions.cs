@@ -1,4 +1,5 @@
 ﻿using APIs.Data;
+using APIs.Helpers;
 using APIs.Interfaces;
 using APIs.Services;
 using Microsoft.AspNetCore.ResponseCompression;
@@ -15,7 +16,7 @@ namespace APIs.Extensions
             var localConnection = configuration.GetConnectionString("LocalConnection");
             services.AddDbContext<AppDbContext>(options =>
             {
-                options.UseSqlServer(localConnection);
+                options.UseSqlServer(localConnection).UseLazyLoadingProxies();
             });
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
@@ -75,6 +76,8 @@ namespace APIs.Extensions
             {
                 options.Level = CompressionLevel.Optimal;
             });
+
+            services.AddAutoMapper(typeof(MappingProfile).Assembly);
 
             return services;
         }

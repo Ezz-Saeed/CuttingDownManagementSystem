@@ -1,5 +1,6 @@
 ﻿using APIs.Data;
 using APIs.Interfaces;
+using APIs.Specifications;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
@@ -17,16 +18,21 @@ namespace APIs.Services
             return await context.Set<T>().FirstOrDefaultAsync(expression);
         }
 
-        public async Task<ICollection<T>> GetAllAsync(Expression<Func<T, bool>>? expression)
+        public async Task<ICollection<T>> GetAllAsync(ISpecification<T>? specification)
         {
-            if(expression is null)
-                return await context.Set<T>().ToListAsync();
-            return await context.Set<T>().Where(expression).ToListAsync();
+            if(specification is not null)
+                return await ApplySpecification(specification).ToListAsync();
+            return await context.Set<T>().ToListAsync();
         }
 
         public void Delete(T entity)
         {
             context.Set<T>().Remove(entity);
+        }
+
+        private IQueryable<T> ApplySpecification(ISpecification<T> specification)
+        {
+            return SpecificationEvaluator<T>.GetQuery(context.Set<T>().AsQueryable(), specification);
         }
 
         //public T Create(T entity)

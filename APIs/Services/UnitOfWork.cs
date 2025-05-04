@@ -17,6 +17,7 @@ namespace APIs.Services
             Cabins = new Repository<Cabin>(context);
             Cables = new Repository<Cable>(context);
             IgnoredIncidents = new Repository<CuttingDownIgnored>(context);
+            Headers = new  Repository<CuttingDownHeader>(context);
         }
         public IRepository<CuttingDownA> CuttingDownAIncidents {  get; private set; }
 
@@ -27,6 +28,8 @@ namespace APIs.Services
         public IRepository<Cable> Cables { get; private set; }
 
         public IRepository<CuttingDownIgnored> IgnoredIncidents { get; private set; }
+
+        public IRepository<CuttingDownHeader> Headers { get; private set; }
 
         public async Task<int> SaveChangesAsync()
         {
