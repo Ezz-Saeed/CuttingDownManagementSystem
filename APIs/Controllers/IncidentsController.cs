@@ -57,5 +57,20 @@ namespace APIs.Controllers
             var headersDto = mapper.Map<List<GetHeaderDto>>(headers);
             return Ok(headersDto);
         }
+
+        [HttpGet("channels")]
+        public async Task<IActionResult> GetChannels()
+        {
+            var channels = await unitOfWork.Channels.GetAllAsync(null);
+            return Ok(channels);
+        }
+
+        [HttpGet("problemTypes")]
+        public async Task<IActionResult> GetProblemTypes()
+        {
+            var problemTypes = await unitOfWork.ProblemTypes.GetAllAsync(null);
+            return Ok(problemTypes);
+        }
+
     }
 }

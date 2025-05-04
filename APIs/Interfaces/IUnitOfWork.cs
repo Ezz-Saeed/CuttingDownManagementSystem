@@ -1,4 +1,5 @@
-﻿using APIs.Models.FTA.IncidentData;
+﻿using APIs.Models.FTA.Hierarchy;
+using APIs.Models.FTA.IncidentData;
 using APIs.Models.STA.IncidentsAndProblems;
 using APIs.Models.STA.Structure;
 
@@ -12,6 +13,8 @@ namespace APIs.Interfaces
         IRepository<Cable> Cables { get; }
         IRepository<CuttingDownIgnored> IgnoredIncidents { get; }
         IRepository<CuttingDownHeader> Headers { get; }
+        IRepository<Channel> Channels { get; }
+        IRepository<ProblemType> ProblemTypes { get; }
         Task<int> SaveChangesAsync();
     }
 }

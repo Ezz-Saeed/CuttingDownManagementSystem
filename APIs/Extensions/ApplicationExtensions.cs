@@ -46,7 +46,7 @@ namespace APIs.Extensions
             {
                 options.AddPolicy("clientPolicy", policy =>
                 {
-                    policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:4200");
+                    policy.AllowAnyHeader().AllowCredentials().AllowAnyMethod().WithOrigins("http://localhost:4200");
                 });
             });
 
