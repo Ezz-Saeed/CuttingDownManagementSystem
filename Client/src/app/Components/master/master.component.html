@@ -1,0 +1,14 @@
+
+
+
+<div class="container mx-4 mt-5 text-center">
+  <tabset #ownerDashboard>
+    <tab [heading]="'Search'" (selectTab)="onTabActivated($event)">
+      <p>new</p>
+    </tab>
+    <tab [heading]="'Ignored'" (selectTab)="onTabActivated($event)">
+      <app-ignored-incidents></app-ignored-incidents>
+    </tab>
+    <tab [heading]="'Add'" (selectTab)="onTabActivated($event)"></tab>
+  </tabset>
+</div>

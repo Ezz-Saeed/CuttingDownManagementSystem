@@ -38,6 +38,7 @@ namespace APIs
                 app.UseSwaggerUI();
             }
 
+            app.UseCors("clientPolicy");
             app.UseMiddleware<RateLimitingMiddleware>();
 
             app.UseHttpsRedirection();

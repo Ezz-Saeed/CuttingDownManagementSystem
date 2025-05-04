@@ -1,0 +1,33 @@
+<div class="container mt-5 text-center">
+
+<h2 class="mb-3">Ignored Incidents</h2>
+
+<table class="table table-hover table-bordered shadow-sm ">
+  <thead class="table-secondary">
+    <tr>
+      <th>ID</th>
+      <th>Incident ID</th>
+      <th>Actual Create Date</th>
+      <th>Synch Create Date</th>
+      <th>Cable Name</th>
+      <th>Cabin Name</th>
+      <th>Created User</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let incident of ignoredIncidents">
+      <td>{{ incident.cuttingDownIgnoredKey }}</td>
+      <td>{{ incident.cuttingDownIncidentId }}</td>
+      <td>{{ incident.actualCreateDate | date:'short' }}</td>
+      <td>{{ incident.synchCreateDate | date:'short' }}</td>
+      <td>{{ incident.cabelName }}</td>
+      <td>{{ incident.cabinName }}</td>
+      <td>{{ incident.createdUser }}</td>
+      <td><button (click)="deleteIgnoredIncident(incident.cuttingDownIgnoredKey)"
+        class="btn btn-danger">Delete</button></td>
+    </tr>
+  </tbody>
+</table>
+
+</div>

@@ -24,6 +24,11 @@ namespace APIs.Services
             return await context.Set<T>().Where(expression).ToListAsync();
         }
 
+        public void Delete(T entity)
+        {
+            context.Set<T>().Remove(entity);
+        }
+
         //public T Create(T entity)
         //{
         //    context.Set<T>().Add(entity);
@@ -49,7 +54,7 @@ namespace APIs.Services
         //    return await context.Set<T>().ToListAsync();
         //}
 
-        //public void DeleteAsync(T entity)
+        //public void Delete(T entity)
         //{
         //    context.Set<T>().Remove(entity);
         //}

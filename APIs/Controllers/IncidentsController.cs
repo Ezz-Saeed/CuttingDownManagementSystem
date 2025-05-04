@@ -33,5 +33,16 @@ namespace APIs.Controllers
             var incidents = await unitOfWork.IgnoredIncidents.GetAllAsync(null);
             return Ok(incidents);
         }
+
+        [HttpDelete("deleteIgnoredIncident/{id}")]
+        public async Task<IActionResult> DeleteIgnoredIncident(int id)
+        {
+            var incident = await unitOfWork.IgnoredIncidents.GetEntityAsync(i => i.CuttingDownIgnoredKey == id);
+            if(incident is null)
+                return NotFound();
+            unitOfWork.IgnoredIncidents.Delete(incident);
+            await unitOfWork.SaveChangesAsync();
+            return Ok(new { Message = "Ignored incident deleted." });
+        }
     }
 }
