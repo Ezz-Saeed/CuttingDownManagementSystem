@@ -5,5 +5,6 @@
         public int? SourceId { get; set; }
         public int? ProblemTypeId { get; set; }
         public bool? Status { get; set; }
+        public string? Search {  get; set; }
     }
 }

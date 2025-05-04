@@ -4,6 +4,8 @@ import { IIgnoredIncident } from '../Models/ignoredIncident';
 import { IHeader } from '../Models/header';
 import { SearchParams } from '../Models/searchParams';
 import { IChannel, IProblemType } from '../Models/channel';
+import { INetworkElement } from '../Models/networkElement';
+import { IIncicentDetails } from '../Models/incidentDetails';
 
 @Injectable({
   providedIn: 'root'
@@ -29,10 +31,21 @@ export class IncidentsService {
     return this.http.get<IProblemType[]>(`${this.baseUrl}/problemTypes`)
   }
 
+  getChildElements(name:string, type:string){
+    return this.http.get<INetworkElement>(`${this.baseUrl}/getChildren`, {params:{name, type}})
+  }
+
+  getNetworkHierarchy(){
+    return this.http.get<string[]>(`${this.baseUrl}/getHierarchy`)
+  }
 
   getIncidentHeaders(searchParams:SearchParams){
     let params = this.getHttpParams(searchParams);
     return this.http.get<IHeader[]>(`${this.baseUrl}/search`,{observe:'response',params})
+  }
+
+  getIncidentDetails(id:number){
+    return this.http.get<IIncicentDetails>(`${this.baseUrl}/getIncidentDetails/${id}`)
   }
 
   getHttpParams(params:SearchParams):HttpParams{

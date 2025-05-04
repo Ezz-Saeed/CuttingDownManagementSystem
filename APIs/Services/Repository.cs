@@ -25,9 +25,26 @@ namespace APIs.Services
             return await context.Set<T>().ToListAsync();
         }
 
+        public async Task<ICollection<T>> GetAllAsyncWithExp(Expression<Func<T, bool>>? expression)
+        {
+            if(expression is not null)
+                return await context.Set<T>().Where(expression).ToListAsync();
+            return await context.Set<T>().ToListAsync();
+        }
+
         public void Delete(T entity)
         {
             context.Set<T>().Remove(entity);
+        }
+
+        public async Task AddEntity(T entity)
+        {
+            await context.Set<T>().AddAsync(entity);
+        }
+
+        public void UpdateEntity(T entity)
+        {
+            context.Set<T>().Update(entity);
         }
 
         private IQueryable<T> ApplySpecification(ISpecification<T> specification)

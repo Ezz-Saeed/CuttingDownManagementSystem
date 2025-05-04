@@ -1,5 +1,6 @@
 ﻿using APIs.Data;
 using APIs.Interfaces;
+using APIs.Models.FTA.Hierarchy;
 using APIs.Models.FTA.IncidentData;
 using APIs.Models.STA.IncidentsAndProblems;
 using APIs.Models.STA.Structure;
@@ -21,6 +22,8 @@ namespace APIs.Services
             Headers = new  Repository<CuttingDownHeader>(context);
             Channels = new  Repository<Channel>(context);
             ProblemTypes = new  Repository<ProblemType>(context);
+            NetworkElements = new Repository<NetworkElement>(context);
+            CuttingDownDetails = new Repository<CuttingDownDetail>(context);
         }
         public IRepository<CuttingDownA> CuttingDownAIncidents {  get; private set; }
 
@@ -37,6 +40,10 @@ namespace APIs.Services
         public IRepository<Channel> Channels { get; private set; }
 
         public IRepository<ProblemType> ProblemTypes { get; private set; }
+
+        public IRepository<NetworkElement> NetworkElements { get; private set; }
+
+        public IRepository<CuttingDownDetail> CuttingDownDetails { get; private set; }
 
         public async Task<int> SaveChangesAsync()
         {

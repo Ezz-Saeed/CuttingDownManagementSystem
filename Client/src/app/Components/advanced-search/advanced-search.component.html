@@ -1,0 +1,81 @@
+<div class="container mt-5">
+  <!-- Search Inputs -->
+  <div class="row mb-4">
+    <div class="col-md-5">
+      <label class="mb-1">Search Critaria</label>
+      <select name="networkHierarchy" class="form-select" [(ngModel)]="elementType">
+        <option *ngFor="let element of networkHierarchy" [value]="element">{{ element }}</option>
+      </select>
+    </div>
+    <div class="col-md-5">
+      <label class="mb-1">Search Value</label>
+      <input type="text" [(ngModel)]="elementName" class="form-control" placeholder="Enter element name..." />
+    </div>
+
+  </div>
+  <div class="col-md-2 ">
+    <button  class="btn btn-secondary" (click)="onSearch(elementName, elementType)">Search</button>
+  </div>
+
+  <!-- Tree Section -->
+  <div class="row">
+    <!-- Recursive Tree Template (place this BEFORE it's used) -->
+<ng-template #renderTree let-node>
+  <li>
+    <div class="d-flex align-items-center" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+      <span (click)="expandNode(node)" style="cursor: pointer;">
+        <i class="bi bi-caret-right-fill"></i>
+      </span>
+      <input type="checkbox" [(ngModel)]="node.checked" class="me-2 ms-2" />
+      <span
+        [title]="node.networkElementName"
+        style="display: inline-block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 240px;">
+        {{ node.networkElementName }}
+      </span>
+    </div>
+    <ul *ngIf="node.children?.length && node.expanded" class="ms-4">
+      <ng-container *ngFor="let child of node.children">
+        <ng-container *ngTemplateOutlet="renderTree; context:{ $implicit: child }"></ng-container>
+      </ng-container>
+    </ul>
+  </li>
+</ng-template>
+
+    <div class="col-md-12" style="max-height: 600px; overflow-y: auto;">
+      <h5>Network Elements</h5>
+      <ul *ngIf="rootNode" class="list-unstyled">
+        <ng-container *ngTemplateOutlet="renderTree; context:{ $implicit: rootNode }"></ng-container>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Navigation Button -->
+  <div class="row mt-3">
+    <div class="col-md-12 text-center">
+      <button class="btn btn-primary" (click)="onNavigate()">&#187; </button>
+    </div>
+  </div>
+
+  <!-- Results Section -->
+  <div class="row mt-4" *ngIf="incidentResults.length > 0">
+    <div class="col-md-12">
+      <h5>Incident Results</h5>
+      <table class="table table-striped table-bordered mt-3">
+        <thead>
+          <tr>
+            <th>Network Element Name</th>
+            <th>Impacted Customers</th>
+            <th>Incident Id</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of incidentResults">
+            <td>{{ item.networkElementName }}</td>
+            <td>{{ item.impactedCustomers }}</td>
+            <td>{{ item.incidentKey }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

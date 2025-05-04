@@ -12,6 +12,14 @@ namespace APIs.Controllers
     public class IncidentsController(IUnitOfWork unitOfWork, IIncidentGenerator incidentGenerator,
         IMapper mapper) : ControllerBase
     {
+
+        private static readonly List<string> NetworkHierarchy = new()
+            {
+                "Governrate", "Sector", "Zone", "City", "Station", "Tower", "Cabin", "Cable", "Block", 
+                "Building", "Flat", "Individual Subscription", "Corporate Subscription"
+            };
+
+
         [HttpPost("generateIncidentsA")]
         public async Task<IActionResult> GenerateAndSaveIncidentsA([FromQuery] int count = 10, [FromQuery] int closedPercentage = 30)
         {
@@ -71,6 +79,81 @@ namespace APIs.Controllers
             var problemTypes = await unitOfWork.ProblemTypes.GetAllAsync(null);
             return Ok(problemTypes);
         }
+
+
+
+        [HttpGet("getChildren")]
+        public async Task<IActionResult> GetChildren([FromQuery] string name, [FromQuery] string type)
+        {
+            
+            var element = await unitOfWork.NetworkElements.GetEntityAsync(e => e.NetworkElementName == name);
+            if (element is null) return NotFound();
+
+            var currentIndex = NetworkHierarchy.IndexOf(type);
+            if (currentIndex == -1 || currentIndex == NetworkHierarchy.Count - 1)
+                return Ok(new List<NetworkElementDto>());
+
+            var nextLevelType = NetworkHierarchy[currentIndex + 1];
+
+            var children = await unitOfWork.NetworkElements.GetAllAsyncWithExp(e =>
+                e.ParentNetworkElementKey == element.NetworkElementKey &&
+                e.NetworkElementType.NetworkElementTypeName == nextLevelType);
+
+            var childrenDto = mapper.Map<List<NetworkElementDto>>(children);
+
+            var result = new NetworkElementDto
+            {
+                NetworkElementKey = element.NetworkElementKey,
+                NetworkElementName = element.NetworkElementName,
+                NetworkElementType = element.NetworkElementType.NetworkElementTypeName,
+                ParentKey = element.ParentNetworkElementKey,
+                Children = childrenDto
+            };
+
+            return Ok(result);
+        }
+
+        [HttpGet("getHierarchy")]
+        public IActionResult GetHierarchy()
+        {
+            return Ok(NetworkHierarchy);
+        }
+
+        [HttpGet("getIncidentDetails/{id}")]
+        public async Task<IActionResult> GetIncidentDetails(int id)
+        {
+            var details = await unitOfWork.CuttingDownDetails.GetAllAsyncWithExp(i => i.NetworkElementKey == id);
+            if (details == null || !details.Any()) return NotFound();
+
+            var detailsDto = mapper.Map<List<DetailsDto>>(details);
+
+            foreach (var item in detailsDto)
+            {
+                var element = await unitOfWork.NetworkElements.GetEntityAsync(e => e.NetworkElementKey == item.NetworkElementKey);
+                item.NetworkElementName = element?.NetworkElementName;
+            }
+
+            return Ok(detailsDto);
+        }
+
+
+
+        //[HttpGet("searchByNetElement/{name}")]
+        //public async Task<IActionResult> SearchByNetElement([FromQuery] string elementType, string name)
+        //{
+        //    var element = await unitOfWork.NetworkElements.GetEntityAsync(e=>e.NetworkElementName==name);
+        //    if(element is null) return NotFound();
+
+        //}
+
+
+        //[HttpPut("closeIncident/{id}")]
+        //public async Task<IActionResult> CloseIncident(int id)
+        //{
+        //    var incident = await unitOfWork.Headers.GetEntityAsync(i=>i.CuttingDownKey==id);
+        //    if (incident is null) return NotFound();
+        //    incident.ActualEndDate = DateTime.UtcNow;
+        //}
 
     }
 }

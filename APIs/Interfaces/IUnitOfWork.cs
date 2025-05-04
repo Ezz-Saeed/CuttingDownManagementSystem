@@ -15,6 +15,8 @@ namespace APIs.Interfaces
         IRepository<CuttingDownHeader> Headers { get; }
         IRepository<Channel> Channels { get; }
         IRepository<ProblemType> ProblemTypes { get; }
+        IRepository<NetworkElement> NetworkElements { get; }
+        IRepository<CuttingDownDetail> CuttingDownDetails { get; }
         Task<int> SaveChangesAsync();
     }
 }
