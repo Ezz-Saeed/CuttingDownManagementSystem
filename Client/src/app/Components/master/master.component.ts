@@ -2,10 +2,11 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { TabDirective, TabsetComponent, TabsModule } from 'ngx-bootstrap/tabs';
 import { IgnoredIncidentsComponent } from "../ignored-incidents/ignored-incidents.component";
+import { SearchComponent } from "../search/search.component";
 
 @Component({
   selector: 'app-master',
-  imports: [TabsModule, IgnoredIncidentsComponent],
+  imports: [TabsModule, IgnoredIncidentsComponent, SearchComponent],
   templateUrl: './master.component.html',
   styleUrl: './master.component.css'
 })

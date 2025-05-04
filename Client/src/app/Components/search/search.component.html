@@ -1,1 +1,66 @@
+<div class="container mt-5">
+  <form class="col-md-12" #form="ngForm" (ngSubmit)="search()">
+    <div class="row ">
+      <div class="col-md-5">
+        <select name="sourceId" class="form-select" [(ngModel)]="serchParams.sourceId">
+          <!-- <option [value]="undefined">All</option> -->
+          <option *ngFor="let channel of channels" [value]="channel.channelKey">{{ channel.channelName }}</option>
+        </select>
+      </div>
 
+      <div class="col-md-5 mx-3">
+        <select name="problemTypeId" class="form-select" [(ngModel)]="serchParams.problemTypeId">
+          <!-- <option [value]="undefined">كل الانواع</option> -->
+          <option *ngFor="let type of problemTypes" [value]="type.problemTypeKey">{{ type.problemTypeName }}</option>
+        </select>
+      </div>
+    </div>
+    <div class="row mt-5">
+      <div class="col-md-5">
+        <select name="problemTypeId" class="form-select" [(ngModel)]="serchParams.status">
+          <!-- <option [value]="null">All</option> -->
+          <option [value]="false">Open</option>
+          <option [value]="true">Closed</option>
+        </select>
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary mt-5">Search</button>
+  </form>
+
+  <table *ngIf="headers.length > 0" class="table table-bordered table-hover shadow-sm  mt-4">
+    <thead class=" table-secondary">
+      <tr>
+        <th>ID</th>
+        <th>Incident ID</th>
+        <th>Channel</th>
+        <th>Problem Type ID</th>
+        <th>Create Date</th>
+        <th>Sync Create Date</th>
+        <th>End Date</th>
+        <th>Sync Update Date</th>
+        <th>Planned</th>
+        <th>Global</th>
+        <th>Active</th>
+        <th>Created By</th>
+        <th>Updated By</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let header of headers">
+        <td>{{ header.cuttingDownKey }}</td>
+        <td>{{ header.cuttingDownIncidentId }}</td>
+        <td>{{ header.channelKey }}</td>
+        <td>{{ header.cuttingDownProblemTypeKey }}</td>
+        <td>{{ header.actualCreateDate | date:'short' }}</td>
+        <td>{{ header.synchCreateDate | date:'short' }}</td>
+        <td>{{ header.actualEndDate | date: 'short'}}</td>
+        <td>{{ header.synchUpdateDate | date: 'short'}}</td>
+        <td>{{ header.isPlanned ? 'Yes' : 'No' }}</td>
+        <td>{{ header.isGlobal ? 'Yes' : 'No' }}</td>
+        <td>{{ header.isActive ? 'Yes' : 'No' }}</td>
+        <td>{{ header.createSystemUserID }}</td>
+        <td>{{ header.updateSystemUserID }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

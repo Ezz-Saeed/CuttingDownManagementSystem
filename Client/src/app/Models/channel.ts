@@ -5,6 +5,6 @@ export interface IChannel{
 }
 
 export interface IProblemType{
-  ProblemTypeKey:number
+  problemTypeKey:number
   problemTypeName:string
 }

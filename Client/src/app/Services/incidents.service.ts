@@ -30,21 +30,21 @@ export class IncidentsService {
   }
 
 
-  getIncidentHeaders(params:SearchParams){
-    let httpParams = this.getHttpParams(params);
-    return this.http.get<IHeader[]>(`${this.baseUrl}/search`,{observe:'response',params: httpParams})
+  getIncidentHeaders(searchParams:SearchParams){
+    let params = this.getHttpParams(searchParams);
+    return this.http.get<IHeader[]>(`${this.baseUrl}/search`,{observe:'response',params})
   }
 
   getHttpParams(params:SearchParams):HttpParams{
     let httpParams = new HttpParams();
     if(params.problemTypeId)
-      httpParams.append("problemTypeId", params.problemTypeId.toString())
+      httpParams = httpParams.append("problemTypeId", params.problemTypeId.toString())
 
     if(params.sourceId)
-      httpParams.append("sourceId", params.sourceId.toString())
+      httpParams = httpParams.append("sourceId", params.sourceId.toString())
 
     if(params.status)
-      httpParams.append("status", params.status.toString())
+      httpParams = httpParams.append("status", params.status.toString())
 
     return httpParams;
   }
