@@ -9,7 +9,7 @@ import { AdvancedSearchComponent } from "../advanced-search/advanced-search.comp
 
 @Component({
   selector: 'app-search',
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule, AdvancedSearchComponent],
   templateUrl: './search.component.html',
   styleUrl: './search.component.css'
 })

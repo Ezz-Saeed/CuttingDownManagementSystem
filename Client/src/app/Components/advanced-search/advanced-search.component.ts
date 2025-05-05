@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { INetworkElement } from '../../Models/networkElement';
 import { firstValueFrom } from 'rxjs';
 import { IncidentsService } from '../../Services/incidents.service';
@@ -9,6 +9,7 @@ import { IChannel, IProblemType } from '../../Models/channel';
 import { IHierarchyPathType } from '../../Models/hierarchyPathType';
 import { FTA } from '../../Models/fta';
 import { Router, RouterModule } from '@angular/router';
+import { AddToFtaComponent } from "../add-to-fta/add-to-fta.component";
 
 @Component({
   selector: 'app-advanced-search',
@@ -29,25 +30,13 @@ export class AdvancedSearchComponent implements OnInit {
   pthTypes:IHierarchyPathType[] = []
   fta:FTA = new FTA()
   errorMessage?:string | null
+  @Output()SelectedKeysOutput = new EventEmitter<number[]>();
 
   constructor(private incidentsService: IncidentsService, private router:Router)  {}
   ngOnInit(): void {
-    this.loadChannels();
-    this.loadProblemTypes();
-    this.loadHierarchyPathTyps();
     this.incidentsService.getNetworkHierarchy().subscribe({
       next:res=>{
         this.networkHierarchy = res
-      },
-      error:err=>console.log(err)
-    })
-  }
-
-
-  addToFta(){
-    this.incidentsService.addCuttingDownToFta(this.fta).subscribe({
-      next:res=>{
-        // this.router.navigate(['/search',{tab:0}])
       },
       error:err=>console.log(err)
     })
@@ -89,8 +78,6 @@ export class AdvancedSearchComponent implements OnInit {
     });
   }
 
-
-
   collectCheckedNodes(node: INetworkElement): number[] {
     const selected: number[] = [];
 
@@ -113,7 +100,8 @@ export class AdvancedSearchComponent implements OnInit {
 
     this.selectedKeys = this.collectCheckedNodes(this.rootNode);
     this.fta.affectedElements = this.selectedKeys;
-
+    console.log(this.fta.affectedElements)
+    this.SelectedKeysOutput.emit(this.fta.affectedElements);
     const requests = this.selectedKeys.map(id => this.incidentsService.getIncidentDetails(id));
 
     Promise.all(requests.map(r => firstValueFrom(r)))
@@ -124,24 +112,7 @@ export class AdvancedSearchComponent implements OnInit {
   }
 
 
-  loadChannels(){
-    this.incidentsService.getChannels().subscribe({
-      next:res=>{
-        this.channels = res;
-        // console.log(this.channels)
-      },
-      error:err=>console.log(err)
-    })
-  }
 
-  loadProblemTypes(){
-    this.incidentsService.getProblemTypes().subscribe({
-      next:res=>{
-        this.problemTypes = res;
-      },
-      error:err=>console.log(err)
-    })
-  }
 
   loadHierarchyPathTyps(){
     this.incidentsService.getHierarchyPathTyps().subscribe({

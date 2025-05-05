@@ -180,22 +180,6 @@ namespace APIs.Controllers
             return Ok();
         }
 
-        //[HttpGet("searchByNetElement/{name}")]
-        //public async Task<IActionResult> SearchByNetElement([FromQuery] string elementType, string name)
-        //{
-        //    var element = await unitOfWork.NetworkElements.GetEntityAsync(e=>e.NetworkElementName==name);
-        //    if(element is null) return NotFound();
-
-        //}
-
-
-        //[HttpPut("closeIncident/{id}")]
-        //public async Task<IActionResult> CloseIncident(int id)
-        //{
-        //    var incident = await unitOfWork.Headers.GetEntityAsync(i=>i.CuttingDownKey==id);
-        //    if (incident is null) return NotFound();
-        //    incident.ActualEndDate = DateTime.UtcNow;
-        //}
 
     }
 }

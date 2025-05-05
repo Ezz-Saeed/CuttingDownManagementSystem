@@ -10,5 +10,6 @@ export const routes: Routes = [
   {path:'master', component:MasterComponent},
   {path:'advancedSearch', component:AdvancedSearchComponent},
   {path:'search', component:SearchComponent},
+  {path:'search', component:SearchComponent},
   {path:'**', component:LoginComponent},
 ];

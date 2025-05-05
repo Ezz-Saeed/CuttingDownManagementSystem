@@ -4,10 +4,11 @@ import { TabDirective, TabsetComponent, TabsModule } from 'ngx-bootstrap/tabs';
 import { IgnoredIncidentsComponent } from "../ignored-incidents/ignored-incidents.component";
 import { SearchComponent } from "../search/search.component";
 import { AdvancedSearchComponent } from "../advanced-search/advanced-search.component";
+import { AddToFtaComponent } from "../add-to-fta/add-to-fta.component";
 
 @Component({
   selector: 'app-master',
-  imports: [TabsModule, IgnoredIncidentsComponent, SearchComponent, AdvancedSearchComponent],
+  imports: [TabsModule, IgnoredIncidentsComponent, SearchComponent, AddToFtaComponent],
   templateUrl: './master.component.html',
   styleUrl: './master.component.css'
 })
