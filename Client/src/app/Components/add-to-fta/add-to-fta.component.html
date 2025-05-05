@@ -30,7 +30,7 @@
         <input name="actualCreateDate" type="date" class="form-control" [(ngModel)]="fta.actualCreateDate" required>
       </div>
     </div>
-    <button routerLink="/master" [queryParams]="{tab:0}" (reset)="addToFta()"
+    <button routerLink="/master" [queryParams]="{tab:0}"
     [disabled]="form.invalid" type="submit" class="btn btn-primary mt-5">Add</button>
   </form>
 

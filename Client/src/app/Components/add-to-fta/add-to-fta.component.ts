@@ -1,12 +1,13 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ViewChild } from '@angular/core';
 import { IChannel, IProblemType } from '../../Models/channel';
 import { IHierarchyPathType } from '../../Models/hierarchyPathType';
 import { FTA } from '../../Models/fta';
 import { IncidentsService } from '../../Services/incidents.service';
 import { Router, RouterModule } from '@angular/router';
-import { FormsModule } from '@angular/forms';
+import { FormGroup, FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { AdvancedSearchComponent } from "../advanced-search/advanced-search.component";
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-add-to-fta',
@@ -15,13 +16,15 @@ import { AdvancedSearchComponent } from "../advanced-search/advanced-search.comp
   styleUrl: './add-to-fta.component.css'
 })
 export class AddToFtaComponent {
+  @ViewChild('form', {static:true})form!:FormGroup
   affectedElements?:number[]=[]
   problemTypes:IProblemType[] = []
   channels:IChannel[] = []
   pthTypes:IHierarchyPathType[] = []
   networkHierarchy:string[] = []
   fta:FTA = new FTA()
-  constructor(private incidentsService: IncidentsService, private router:Router)  {
+  constructor(private incidentsService: IncidentsService, private router:Router,
+    private toastr:ToastrService)  {
 
   }
   ngOnInit(): void {
@@ -40,9 +43,11 @@ export class AddToFtaComponent {
 
 
   addToFta(){
-    console.log(this.affectedElements)
+    // console.log(this.affectedElements)
     this.incidentsService.addCuttingDownToFta(this.fta).subscribe({
       next:res=>{
+        this.toastr.success("Incident added successfully!");
+        this.form.reset();
         // this.router.navigate(['/search',{tab:0}])
       },
       error:err=>console.log(err)

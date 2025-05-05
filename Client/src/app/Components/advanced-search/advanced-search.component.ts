@@ -100,7 +100,7 @@ export class AdvancedSearchComponent implements OnInit {
 
     this.selectedKeys = this.collectCheckedNodes(this.rootNode);
     this.fta.affectedElements = this.selectedKeys;
-    console.log(this.fta.affectedElements)
+    // console.log(this.fta.affectedElements)
     this.SelectedKeysOutput.emit(this.fta.affectedElements);
     const requests = this.selectedKeys.map(id => this.incidentsService.getIncidentDetails(id));
 
