@@ -4,7 +4,6 @@
       <div class="col-md-5">
         <label class="mb-1">Source of Cutting Down</label>
         <select name="sourceId" class="form-select" [(ngModel)]="serchParams.sourceId">
-          <!-- <option [value]="undefined">All</option> -->
           <option *ngFor="let channel of channels" [value]="channel.channelKey">{{ channel.channelName }}</option>
         </select>
       </div>
@@ -12,7 +11,6 @@
       <div class="col-md-5 mx-3">
         <label class="mb-1">Problem Type of Cutting Down</label>
         <select name="problemTypeId" class="form-select" [(ngModel)]="serchParams.problemTypeId">
-          <!-- <option [value]="undefined">كل الانواع</option> -->
           <option *ngFor="let type of problemTypes" [value]="type.problemTypeKey">{{ type.problemTypeName }}</option>
         </select>
       </div>
@@ -21,7 +19,6 @@
       <div class="col-md-5">
         <label class="mb-1">Status</label>
         <select name="problemTypeId" class="form-select" [(ngModel)]="serchParams.status">
-          <!-- <option [value]="null">All</option> -->
           <option [value]="false">Open</option>
           <option [value]="true">Closed</option>
         </select>
@@ -68,6 +65,6 @@
   </table>
 
 </div>
-<app-advanced-search></app-advanced-search>
+
 
 

@@ -19,6 +19,14 @@ namespace APIs.Helpers
 
             CreateMap<CuttingDownDetail, DetailsDto>()
                 .ForMember(d=>d.IncidentKey, opt=>opt.MapFrom(s=>s.CuttingDownHeader.CuttingDownIncidentId));
+
+            CreateMap<NetworkElementHierarchyPath, HierarchyPathDto>();
+
+            CreateMap<CuttingDownHeaderDto,CuttingDownHeader>();
+
+                //.ForMember(d=>d.ChannelKey, opt=>opt.MapFrom(s=>s.Channel.ChannelKey))
+                //.ForMember(d => d.CuttingDownProblemTypeKey, opt => opt.MapFrom(s => s.CuttingDownProblemType.ProblemTypeKey))
+                //.ForMember(d => d.HierarchyPathKey, opt => opt.MapFrom(s => s.NetworkElementHierarchyPath.NetworkElementHierarchyPathKey));
         }
     }
 }

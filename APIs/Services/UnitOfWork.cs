@@ -4,6 +4,8 @@ using APIs.Models.FTA.Hierarchy;
 using APIs.Models.FTA.IncidentData;
 using APIs.Models.STA.IncidentsAndProblems;
 using APIs.Models.STA.Structure;
+using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using Channel = APIs.Models.FTA.Hierarchy.Channel;
 
 namespace APIs.Services
@@ -24,6 +26,7 @@ namespace APIs.Services
             ProblemTypes = new  Repository<ProblemType>(context);
             NetworkElements = new Repository<NetworkElement>(context);
             CuttingDownDetails = new Repository<CuttingDownDetail>(context);
+            NetworkElementHierarchyPaths = new Repository<NetworkElementHierarchyPath>(context);
         }
         public IRepository<CuttingDownA> CuttingDownAIncidents {  get; private set; }
 
@@ -44,6 +47,20 @@ namespace APIs.Services
         public IRepository<NetworkElement> NetworkElements { get; private set; }
 
         public IRepository<CuttingDownDetail> CuttingDownDetails { get; private set; }
+
+        public IRepository<NetworkElementHierarchyPath> NetworkElementHierarchyPaths { get; private set; }
+
+        public async Task<int> GetImpactedCustomerCount(int id)
+        {
+            var param = new SqlParameter("@NetworkElementKey", id);
+
+            var result = await context
+                .Database
+                .SqlQueryRaw<int>("SELECT dbo.FN_GetAffectedCustomerCount(@NetworkElementKey) AS Value", param)
+                .FirstAsync();
+
+            return result;
+        }
 
         public async Task<int> SaveChangesAsync()
         {

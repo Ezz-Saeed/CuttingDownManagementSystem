@@ -17,6 +17,8 @@ namespace APIs.Interfaces
         IRepository<ProblemType> ProblemTypes { get; }
         IRepository<NetworkElement> NetworkElements { get; }
         IRepository<CuttingDownDetail> CuttingDownDetails { get; }
+        IRepository<NetworkElementHierarchyPath> NetworkElementHierarchyPaths { get; }
+        Task<int> GetImpactedCustomerCount(int id);
         Task<int> SaveChangesAsync();
     }
 }

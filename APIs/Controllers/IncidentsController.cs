@@ -1,5 +1,6 @@
 ﻿using APIs.DTOs;
 using APIs.Interfaces;
+using APIs.Models.FTA.IncidentData;
 using APIs.Specifications;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
@@ -87,7 +88,8 @@ namespace APIs.Controllers
         {
             
             var element = await unitOfWork.NetworkElements.GetEntityAsync(e => e.NetworkElementName == name);
-            if (element is null) return NotFound();
+            if (element is null || element.NetworkElementType.NetworkElementTypeName!=type) 
+                return NotFound(new {Message = "Non matched value" });
 
             var currentIndex = NetworkHierarchy.IndexOf(type);
             if (currentIndex == -1 || currentIndex == NetworkHierarchy.Count - 1)
@@ -136,6 +138,38 @@ namespace APIs.Controllers
             return Ok(detailsDto);
         }
 
+
+        [HttpGet("getHierarchyPathTyps")]
+        public async Task<IActionResult> GetHierarchyPathTyps()
+        {
+            var pathTypes = await unitOfWork.NetworkElementHierarchyPaths.GetAllAsync(null);
+
+            var pathTypesDto = mapper.Map<List< HierarchyPathDto >>(pathTypes);
+            return Ok(pathTypesDto);
+        }
+
+        [HttpPost("addCuttingDownToFta")]
+        public async Task<IActionResult> AddCuttingDownToFta(CuttingDownHeaderDto dto)
+        {
+            var header = mapper.Map<CuttingDownHeader>(dto);
+            await unitOfWork.Headers.AddEntity(header);
+            await unitOfWork.SaveChangesAsync();
+            foreach(var ele in dto.AffectedElements)
+            {
+                var count = await unitOfWork.GetImpactedCustomerCount(ele);
+                CuttingDownDetail detail = new()
+                {
+                    CuttingDownKey = header.CuttingDownKey,
+                    NetworkElementKey = ele,
+                    ActualCreateDate = header.ActualCreateDate,
+                    ImpactedCustomers = count,
+                };
+                await unitOfWork.CuttingDownDetails.AddEntity(detail);
+                await unitOfWork.SaveChangesAsync();
+            }
+            //var details
+            return Ok();
+        }
 
 
         //[HttpGet("searchByNetElement/{name}")]

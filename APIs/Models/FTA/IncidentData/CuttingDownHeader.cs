@@ -35,6 +35,10 @@ namespace APIs.Models.FTA.IncidentData
         public string CreateSystemUserID { get; set; }
         public string? UpdateSystemUserID { get; set; }
 
+        [ForeignKey(nameof(NetworkElementHierarchyPath))]
+        public int? HierarchyPathKey { get; set; }
+        public virtual NetworkElementHierarchyPath? NetworkElementHierarchyPath { get; set; }
+
         public virtual ICollection<CuttingDownDetail> Details { get; set; }
     }
 }

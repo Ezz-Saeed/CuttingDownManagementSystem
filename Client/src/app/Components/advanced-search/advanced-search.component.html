@@ -1,4 +1,41 @@
 <div class="container mt-5">
+
+  <form class="col-md-12" #form="ngForm" (ngSubmit)="addToFta()">
+    <div class="row mb-5">
+      <div class="col-md-5">
+        <label class="mb-1">Source of Cutting Down</label>
+        <select name="channelKey" class="form-select" [(ngModel)]="fta.channelKey" required>
+          <option *ngFor="let channel of channels" [value]="channel.channelKey">{{ channel.channelName }}</option>
+        </select>
+      </div>
+
+      <div class="col-md-5 mx-3">
+        <label class="mb-1">Problem Type of Cutting Down</label>
+        <select name="cuttingDownProblemTypeKey" class="form-select" [(ngModel)]="fta.cuttingDownProblemTypeKey" required>
+          <option *ngFor="let type of problemTypes" [value]="type.problemTypeKey">{{ type.problemTypeName }}</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="row ">
+      <div class="col-md-5">
+        <label class="mb-1">Network Hierarchy</label>
+        <select name="hierarchyPathKey" class="form-select" [(ngModel)]="fta.hierarchyPathKey" required>
+          <option *ngFor="let type of pthTypes" [value]="type.networkElementHierarchyPathKey">
+            {{ type.abbreviation }}</option>
+        </select>
+      </div>
+
+      <div class="col-md-5 mx-3">
+        <label class="mb-1">Start Date</label>
+        <input name="actualCreateDate" type="date" class="form-control" [(ngModel)]="fta.actualCreateDate" required>
+      </div>
+    </div>
+    <button routerLink="/master" [queryParams]="{tab:0}" (reset)="addToFta()"
+    [disabled]="form.invalid" type="submit" class="btn btn-primary mt-5">Add</button>
+  </form>
+
+
   <!-- Search Inputs -->
   <div class="row mb-4">
     <div class="col-md-5">
@@ -18,36 +55,54 @@
   </div>
 
   <!-- Tree Section -->
-  <div class="row">
-    <!-- Recursive Tree Template (place this BEFORE it's used) -->
-<ng-template #renderTree let-node>
-  <li>
-    <div class="d-flex align-items-center" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-      <span (click)="expandNode(node)" style="cursor: pointer;">
-        <i class="bi bi-caret-right-fill"></i>
-      </span>
-      <input type="checkbox" [(ngModel)]="node.checked" class="me-2 ms-2" />
-      <span
-        [title]="node.networkElementName"
-        style="display: inline-block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 240px;">
-        {{ node.networkElementName }}
-      </span>
-    </div>
-    <ul *ngIf="node.children?.length && node.expanded" class="ms-4">
-      <ng-container *ngFor="let child of node.children">
-        <ng-container *ngTemplateOutlet="renderTree; context:{ $implicit: child }"></ng-container>
-      </ng-container>
-    </ul>
-  </li>
-</ng-template>
+<div class="row">
 
-    <div class="col-md-12" style="max-height: 600px; overflow-y: auto;">
-      <h5>Network Elements</h5>
-      <ul *ngIf="rootNode" class="list-unstyled">
-        <ng-container *ngTemplateOutlet="renderTree; context:{ $implicit: rootNode }"></ng-container>
+  <!-- Recursive Tree Template (place this BEFORE it's used) -->
+  <ng-template #renderTree let-node>
+    <li>
+      <div class="d-flex align-items-center" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+        <span (click)="expandNode(node)" style="cursor: pointer;">
+          <i class="bi bi-caret-right-fill"></i>
+        </span>
+        <input type="checkbox" [(ngModel)]="node.checked" (change)="onNodeCheckedChange(node)" class="me-2 ms-2" />
+        <span
+          [title]="node.networkElementName"
+          style="display: inline-block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 240px;">
+          {{ node.networkElementName }}
+        </span>
+      </div>
+      <ul *ngIf="node.children?.length && node.expanded" class="ms-4">
+        <ng-container *ngFor="let child of node.children">
+          <ng-container *ngTemplateOutlet="renderTree; context:{ $implicit: child }"></ng-container>
+        </ng-container>
       </ul>
-    </div>
+    </li>
+  </ng-template>
+
+  <!-- Error message -->
+  <div *ngIf="errorMessage" class="text-danger mx-2">
+    <p>{{ errorMessage }}</p>
   </div>
+
+  <!-- Tree with Select All -->
+  <div class="col-md-12" style="max-height: 600px; overflow-y: auto;">
+    <!-- Select All Checkbox -->
+    <div class="form-check mb-2">
+      <input type="checkbox" class="" [(ngModel)]="allSelected" (change)="toggleAllChecked()" id="selectAllCheckbox">
+      <label class="form-check-label" for="selectAllCheckbox">All</label>
+    </div>
+    <h5>Network Elements</h5>
+
+
+
+    <!-- Tree Root -->
+    <ul *ngIf="rootNode" class="list-unstyled">
+      <ng-container *ngTemplateOutlet="renderTree; context:{ $implicit: rootNode }"></ng-container>
+    </ul>
+  </div>
+
+</div>
+
 
   <!-- Navigation Button -->
   <div class="row mt-3">

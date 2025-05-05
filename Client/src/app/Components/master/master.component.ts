@@ -3,10 +3,11 @@ import { ActivatedRoute } from '@angular/router';
 import { TabDirective, TabsetComponent, TabsModule } from 'ngx-bootstrap/tabs';
 import { IgnoredIncidentsComponent } from "../ignored-incidents/ignored-incidents.component";
 import { SearchComponent } from "../search/search.component";
+import { AdvancedSearchComponent } from "../advanced-search/advanced-search.component";
 
 @Component({
   selector: 'app-master',
-  imports: [TabsModule, IgnoredIncidentsComponent, SearchComponent],
+  imports: [TabsModule, IgnoredIncidentsComponent, SearchComponent, AdvancedSearchComponent],
   templateUrl: './master.component.html',
   styleUrl: './master.component.css'
 })

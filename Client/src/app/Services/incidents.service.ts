@@ -6,6 +6,8 @@ import { SearchParams } from '../Models/searchParams';
 import { IChannel, IProblemType } from '../Models/channel';
 import { INetworkElement } from '../Models/networkElement';
 import { IIncicentDetails } from '../Models/incidentDetails';
+import { FTA } from '../Models/fta';
+import { IHierarchyPathType } from '../Models/hierarchyPathType';
 
 @Injectable({
   providedIn: 'root'
@@ -42,6 +44,14 @@ export class IncidentsService {
   getIncidentHeaders(searchParams:SearchParams){
     let params = this.getHttpParams(searchParams);
     return this.http.get<IHeader[]>(`${this.baseUrl}/search`,{observe:'response',params})
+  }
+
+  getHierarchyPathTyps(){
+    return this.http.get<IHierarchyPathType[]>(`${this.baseUrl}/getHierarchyPathTyps`)
+  }
+
+  addCuttingDownToFta(fta:FTA){
+    return this.http.post(`${this.baseUrl}/addCuttingDownToFta`, fta)
   }
 
   getIncidentDetails(id:number){

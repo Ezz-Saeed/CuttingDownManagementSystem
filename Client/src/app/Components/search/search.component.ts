@@ -9,7 +9,7 @@ import { AdvancedSearchComponent } from "../advanced-search/advanced-search.comp
 
 @Component({
   selector: 'app-search',
-  imports: [FormsModule, CommonModule, AdvancedSearchComponent],
+  imports: [FormsModule, CommonModule],
   templateUrl: './search.component.html',
   styleUrl: './search.component.css'
 })
@@ -44,11 +44,11 @@ export class SearchComponent implements OnInit {
   }
 
   search(){
-    console.log(this.serchParams)
+    // console.log(this.serchParams)
     this.incidentsService.getIncidentHeaders(this.serchParams).subscribe({
       next:res=>{
         this.headers = res.body ?? []
-        console.log(this.headers)
+        // console.log(this.headers)
       },
       error:err=>console.log(err)
     })
