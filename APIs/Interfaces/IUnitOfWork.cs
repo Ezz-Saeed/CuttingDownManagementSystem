@@ -1,4 +1,5 @@
-﻿using APIs.Models.FTA.Hierarchy;
+﻿using APIs.Models.FTA;
+using APIs.Models.FTA.Hierarchy;
 using APIs.Models.FTA.IncidentData;
 using APIs.Models.STA.IncidentsAndProblems;
 using APIs.Models.STA.Structure;
@@ -18,6 +19,7 @@ namespace APIs.Interfaces
         IRepository<NetworkElement> NetworkElements { get; }
         IRepository<CuttingDownDetail> CuttingDownDetails { get; }
         IRepository<NetworkElementHierarchyPath> NetworkElementHierarchyPaths { get; }
+        IRepository<User> Users { get; }
         Task<int> GetImpactedCustomerCount(int id);
         Task<int> SaveChangesAsync();
     }

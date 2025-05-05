@@ -54,6 +54,12 @@ export class IncidentsService {
     return this.http.post(`${this.baseUrl}/addCuttingDownToFta`, fta)
   }
 
+
+  login(userName:string,password:string){
+    let model = {userName:userName, password:password}
+    return this.http.post(`${this.baseUrl}/login`, model)
+  }
+
   getIncidentDetails(id:number){
     return this.http.get<IIncicentDetails>(`${this.baseUrl}/getIncidentDetails/${id}`)
   }

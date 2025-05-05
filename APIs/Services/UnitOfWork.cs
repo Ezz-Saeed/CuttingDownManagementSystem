@@ -1,5 +1,6 @@
 ﻿using APIs.Data;
 using APIs.Interfaces;
+using APIs.Models.FTA;
 using APIs.Models.FTA.Hierarchy;
 using APIs.Models.FTA.IncidentData;
 using APIs.Models.STA.IncidentsAndProblems;
@@ -27,6 +28,7 @@ namespace APIs.Services
             NetworkElements = new Repository<NetworkElement>(context);
             CuttingDownDetails = new Repository<CuttingDownDetail>(context);
             NetworkElementHierarchyPaths = new Repository<NetworkElementHierarchyPath>(context);
+            Users = new Repository<User>(context);
         }
         public IRepository<CuttingDownA> CuttingDownAIncidents {  get; private set; }
 
@@ -49,6 +51,7 @@ namespace APIs.Services
         public IRepository<CuttingDownDetail> CuttingDownDetails { get; private set; }
 
         public IRepository<NetworkElementHierarchyPath> NetworkElementHierarchyPaths { get; private set; }
+        public IRepository<User> Users { get; private set; }
 
         public async Task<int> GetImpactedCustomerCount(int id)
         {

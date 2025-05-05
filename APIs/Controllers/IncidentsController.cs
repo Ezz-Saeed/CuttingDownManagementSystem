@@ -16,7 +16,7 @@ namespace APIs.Controllers
 
         private static readonly List<string> NetworkHierarchy = new()
             {
-                "Governrate", "Sector", "Zone", "City", "Station", "Tower", "Cabin", "Cable", "Block", 
+                "Governrate", "Sector", "Zone", "City", "Station", "Tower", "Cabin", "Cable", "Block",
                 "Building", "Flat", "Individual Subscription", "Corporate Subscription"
             };
 
@@ -30,7 +30,7 @@ namespace APIs.Controllers
             return Ok(new { Message = $"{incidents.Result.Count} CuttingDownA incidents generated and saved." });
         }
 
-        
+
         [HttpPost("generateIncidentsB")]
         public async Task<IActionResult> GenerateAndSaveIncidentsB([FromQuery] int count = 10, [FromQuery] int closedPercentage = 30)
         {
@@ -51,7 +51,7 @@ namespace APIs.Controllers
         public async Task<IActionResult> DeleteIgnoredIncident(int id)
         {
             var incident = await unitOfWork.IgnoredIncidents.GetEntityAsync(i => i.CuttingDownIgnoredKey == id);
-            if(incident is null)
+            if (incident is null)
                 return NotFound();
             unitOfWork.IgnoredIncidents.Delete(incident);
             await unitOfWork.SaveChangesAsync();
@@ -86,10 +86,10 @@ namespace APIs.Controllers
         [HttpGet("getChildren")]
         public async Task<IActionResult> GetChildren([FromQuery] string name, [FromQuery] string type)
         {
-            
+
             var element = await unitOfWork.NetworkElements.GetEntityAsync(e => e.NetworkElementName == name);
-            if (element is null || element.NetworkElementType.NetworkElementTypeName!=type) 
-                return NotFound(new {Message = "Non matched value" });
+            if (element is null || element.NetworkElementType.NetworkElementTypeName != type)
+                return NotFound(new { Message = "Non matched value" });
 
             var currentIndex = NetworkHierarchy.IndexOf(type);
             if (currentIndex == -1 || currentIndex == NetworkHierarchy.Count - 1)
@@ -144,7 +144,7 @@ namespace APIs.Controllers
         {
             var pathTypes = await unitOfWork.NetworkElementHierarchyPaths.GetAllAsync(null);
 
-            var pathTypesDto = mapper.Map<List< HierarchyPathDto >>(pathTypes);
+            var pathTypesDto = mapper.Map<List<HierarchyPathDto>>(pathTypes);
             return Ok(pathTypesDto);
         }
 
@@ -154,7 +154,7 @@ namespace APIs.Controllers
             var header = mapper.Map<CuttingDownHeader>(dto);
             await unitOfWork.Headers.AddEntity(header);
             await unitOfWork.SaveChangesAsync();
-            foreach(var ele in dto.AffectedElements)
+            foreach (var ele in dto.AffectedElements)
             {
                 var count = await unitOfWork.GetImpactedCustomerCount(ele);
                 CuttingDownDetail detail = new()
@@ -171,6 +171,14 @@ namespace APIs.Controllers
             return Ok();
         }
 
+
+        [HttpPost("login")]
+        public async Task<IActionResult> Login(LoginDto dto)
+        {
+            var user = await unitOfWork.Users.GetEntityAsync(u=>u.Name == dto.UserName && u.Password == dto.Password);
+            if (user is null) return Unauthorized(new { Message = "Invalid credentials" });
+            return Ok();
+        }
 
         //[HttpGet("searchByNetElement/{name}")]
         //public async Task<IActionResult> SearchByNetElement([FromQuery] string elementType, string name)
