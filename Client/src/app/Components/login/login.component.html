@@ -18,10 +18,11 @@
                 <input name="pass" type="password" [(ngModel)]="pass" class="form-control form-control-lg" required/>
                 <label class="form-label" >Password</label>
               </div>
-              <button [disabled]="form.invalid" class="btn btn-outline-light btn-lg px-5" type="submit">Login</button>
               <div *ngIf="errorMessage" class="text-danger mx-2 mt-2">
                 <p>{{ errorMessage }}</p>
               </div>
+              <button [disabled]="form.invalid" class="btn btn-outline-light btn-lg px-5" type="submit">Login</button>
+
 
             </form>
 

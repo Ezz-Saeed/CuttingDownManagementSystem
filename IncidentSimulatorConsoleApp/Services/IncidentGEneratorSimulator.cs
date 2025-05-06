@@ -9,6 +9,7 @@ namespace IncidentSimulatorConsoleApp.Services
     public class IncidentGeneratorSimulator(int parallelRequests = 4, int delayBetweenRoundsInSeconds = 10)
     {
         private const string baseUrl = "http://localhost:5288/api/Incidents";
+        private const string remoteUrl = "http://cuttingdownmanagementsystem.runasp.net/api/Incidents";
         private HttpClient httpClient = new();
         private static  readonly ThreadLocal<Random> random = new(() => new Random());
 
@@ -34,13 +35,13 @@ namespace IncidentSimulatorConsoleApp.Services
                         if (i % 2 == 0)
                         {
                             var response = await httpClient.
-                            PostAsync($"{baseUrl}/generateIncidentsA?count={count}&closedPercentage={closedPercentage}", null);
+                            PostAsync($"{remoteUrl}/generateIncidentsA?count={count}&closedPercentage={closedPercentage}", null);
                             Console.WriteLine($"[A] Sent {count} incidents. Status: {response.StatusCode}");
                         }
                         else
                         {
                             var response = await httpClient.
-                            PostAsync($"{baseUrl}/generateIncidentsB?count={count}&closedPercentage={closedPercentage}", null);
+                            PostAsync($"{remoteUrl}/generateIncidentsB?count={count}&closedPercentage={closedPercentage}", null);
                             Console.WriteLine($"[B] Sent {count} incidents. Status: {response.StatusCode}");
                         }
                     }

@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { IHeader } from '../../Models/header';
 import { SearchParams } from '../../Models/searchParams';
 import { IncidentsService } from '../../Services/incidents.service';
 import { IChannel, IProblemType } from '../../Models/channel';
-import { FormsModule } from '@angular/forms';
+import { FormGroup, FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { AdvancedSearchComponent } from "../advanced-search/advanced-search.component";
 
@@ -14,6 +14,7 @@ import { AdvancedSearchComponent } from "../advanced-search/advanced-search.comp
   styleUrl: './search.component.css'
 })
 export class SearchComponent implements OnInit {
+  @ViewChild('form', {static:true})form!:FormGroup
   headers:IHeader[] = []
   problemTypes:IProblemType[] = []
   channels:IChannel[] = []
@@ -48,10 +49,15 @@ export class SearchComponent implements OnInit {
     this.incidentsService.getIncidentHeaders(this.serchParams).subscribe({
       next:res=>{
         this.headers = res.body ?? []
+        // this.form.reset();
         // console.log(this.headers)
       },
       error:err=>console.log(err)
     })
+  }
+
+  resetForm(){
+    this.form.reset();
   }
 
 }

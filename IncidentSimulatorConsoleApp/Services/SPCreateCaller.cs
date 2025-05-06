@@ -13,6 +13,8 @@ namespace IncidentSimulatorConsoleApp.Services
         private readonly string localConnection = 
                 "Server=DESKTOP-2SR000U\\SQLEXPRESS01;Database=CutDownDb;Trusted_Connection=true;Encrypt=false";
 
+        private readonly string remoteConnection = "Server=db18919.public.databaseasp.net; Database=db18919; User Id=db18919; Password=rC!6%9Aj2Gh@; Encrypt=True; TrustServerCertificate=True; MultipleActiveResultSets=True; ";
+
         public async Task RunAsync(CancellationToken cancellationToken)
         {
             while (!cancellationToken.IsCancellationRequested)
@@ -25,7 +27,7 @@ namespace IncidentSimulatorConsoleApp.Services
 
         public void Exec_SP_Create()
         {
-            using SqlConnection connection = new SqlConnection(localConnection);
+            using SqlConnection connection = new SqlConnection(remoteConnection);
             using SqlCommand command = new SqlCommand("SP_Create", connection)
             {
                 CommandType = CommandType.StoredProcedure
@@ -45,7 +47,7 @@ namespace IncidentSimulatorConsoleApp.Services
 
         public void Exec_SP_Close()
         {
-            using SqlConnection connection = new SqlConnection(localConnection);
+            using SqlConnection connection = new SqlConnection(remoteConnection);
             using SqlCommand command = new SqlCommand("SP_Close", connection)
             {
                 CommandType = CommandType.StoredProcedure

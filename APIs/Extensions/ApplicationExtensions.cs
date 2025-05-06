@@ -14,9 +14,10 @@ namespace APIs.Extensions
         public static IServiceCollection AddApplicationExtensions(this IServiceCollection services, IConfiguration configuration)
         {
             var localConnection = configuration.GetConnectionString("LocalConnection");
+            var remoteConnection = configuration.GetConnectionString("RemoteConnection");
             services.AddDbContext<AppDbContext>(options =>
             {
-                options.UseSqlServer(localConnection).UseLazyLoadingProxies();
+                options.UseSqlServer(remoteConnection).UseLazyLoadingProxies();
             });
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();

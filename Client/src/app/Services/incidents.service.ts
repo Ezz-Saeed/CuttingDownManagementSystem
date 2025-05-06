@@ -13,7 +13,7 @@ import { IHierarchyPathType } from '../Models/hierarchyPathType';
   providedIn: 'root'
 })
 export class IncidentsService {
-  baseUrl = 'http://localhost:5288/api/incidents'
+  baseUrl = 'http://cuttingdownmanagementsystem.runasp.net/api/incidents'
 
   constructor(private http:HttpClient) { }
 

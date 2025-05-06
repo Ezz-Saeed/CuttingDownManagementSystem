@@ -26,6 +26,7 @@
     </div>
     <button type="submit" class="btn btn-primary mt-5">Search</button>
   </form>
+  <button (click)="resetForm()" class="btn btn-secondary mt-3">Reset</button>
 
   <table *ngIf="headers.length > 0" class="table table-bordered table-hover shadow-sm  mt-4">
     <thead class=" table-secondary">
